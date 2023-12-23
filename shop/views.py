@@ -69,8 +69,44 @@ def tracker(request):
 
     return render(request, 'shop/tracker.html')
 
+def queryMatch(query,p):
+    if query.lower() in p.product_name.lower() or query in p.desc.lower() or query in p.subcategory.lower() or query in p.category.lower():
+        return True
+    return False
+
 def search(request):
-    return render(request, 'shop/search.html')
+
+    categories = Product.objects.values('category')
+    cats = {item['category'] for item in categories}
+    if request.method == 'POST':
+        query = request.POST['search']
+        products = Product.objects.all()
+
+        for p in products:
+                if query.lower() in p.product_name.lower() or query in p.desc.lower() or query in p.subcategory.lower() or query in p.category.lower() :
+                    cats.add(p)
+
+        print(cats)
+
+    prods = []
+
+    for cat in cats:
+        product = Product.objects.filter(category=cat)
+        prod = [p for p in product if queryMatch(query,p)]
+
+        n = len(prod)
+        nSlides = n//4 + ceil(n/4-n//4)
+
+        if len(prod)!=0:
+            prods.append([prod,range(1,nSlides),nSlides])
+
+        
+            
+    dic = {'allProds':prods}
+
+
+        
+    return render(request,'shop/search.html',dic)
 
 def productView(request, myid):
     product = Product.objects.filter(id=myid)
