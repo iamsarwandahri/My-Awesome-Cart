@@ -4,14 +4,12 @@ if (localStorage.getItem('cart') == null) {
     cart = JSON.parse(localStorage.getItem('cart'))
     $('#cart').html(sum(cart))
     updateCart(cart)
-    // console.log(cart)
     $('#popcart').popover('hide')
 }
 
 $('.divpr').on('click','button.cart',function () {
     var idstr = this.id.toString();
     if (cart[idstr] != undefined) {
-        console.log(cart)
         var qty = cart[idstr][0] = cart[idstr][0] + 1;
         var price = cart[idstr][2] = cart[idstr][2]*qty
     }

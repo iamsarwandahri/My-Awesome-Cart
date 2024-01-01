@@ -43,7 +43,7 @@
       'desc' : $('textarea[name=desc]').val(),
       'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
      }
-     console.log(formData)
+
      $.ajax({
       type:"POST",
       url: '/shop/contact/',
@@ -56,9 +56,6 @@
         var message = 'Thanks: '+detail[0]['name']+" Your form is submitted"
         alert(message)
         location.reload(true)
-      }
-      else{
-        console.log("Nothing Happened")
       }
     }).fail(function(jqXHR, textStatus, errorThrown) {
       // Handle errors from the AJAX request

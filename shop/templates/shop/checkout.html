@@ -59,6 +59,7 @@
         </form>
     </div>
 </div>
+
 {% endblock %}
 {% block js %}
   <script>
@@ -90,10 +91,12 @@
     $("#totalPrice").html(totalPrice)
     $('#amount').val($('#totalPrice').html())
     $('#itemsJson').val(JSON.stringify(cart))
-    {% if thank %}
+
+    if (thank){
     alert("THANKS FOR THE ORDER, Track your ID is: {{id}}")
     document.location = '/tracker/'
     localStorage.clear()
-    {% endif %}
-  </script>
+    }
+  
+</script>
 {% endblock %}
